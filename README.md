@@ -1,8 +1,8 @@
-# Contribution [#]: [Issue Title]
+# Contribution [#6048]: Add docstrings for core
 
 **Contribution Number:** 1  
 **Student:** Dan Nguyen 
-**Issue:** [GitHub issue link]  
+**Issue:** https://github.com/badges/shields/issues/6038
 **Status:** Phase I
 
 ---
