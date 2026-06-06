@@ -9,8 +9,7 @@
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
-
+I chose this issue because it's a well-scoped JavaScript documentation task that involves adding JSDoc comments to existing code in an active, well-maintained repo. Since it's a documentation change rather than a behavior change, it's a low-risk way to learn the full contribution workflow of fork, PR, and review on my first contribution, and it's in a language I'm comfortable with, in a repo with clear contributing dcs.
 ---
 
 ## Understanding the Issue
