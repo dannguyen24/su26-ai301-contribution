@@ -1,4 +1,4 @@
-# Contribution [#6048]: Add docstrings for core
+# Contribution [#27956]: [React Doctor] rerender-memo-with-default-value: Default prop value [] creates a new array reference every render — extract to... (20 occurrences)
 
 **Contribution Number:** 1  
 **Student:** Dan Nguyen 
@@ -8,9 +8,9 @@
 ---
 
 ## Why I Chose This Issue
-
-I chose this issue because it's a well-scoped JavaScript documentation task that involves adding JSDoc comments to existing code in an active, well-maintained repo. Since it's a documentation change rather than a behavior change, it's a low-risk way to learn the full contribution workflow of fork, PR, and review on my first contribution, and it's in a language I'm comfortable with, in a repo with clear contributing dcs.
 ---
+
+I'm a computer science student with hands-on experience building React applications, and I'm interested in contributing to WSO2 Identity Server as a way to explore the identity and authentication domain. This issue caught my attention because it targets the `react-doctor/rerender-memo-with-default-value` rule — a performance pattern I'm familiar with, where inline default prop values like [] or {} create new object references on every render, defeating the purpose of React.memo. Fixing these 20 occurrences is a focused, well-scoped task that lets me get comfortable with the frontend codebase before moving on to more complex authentication-related features. 
 
 ## Understanding the Issue
 
