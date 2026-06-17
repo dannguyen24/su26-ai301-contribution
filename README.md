@@ -99,7 +99,7 @@ Using UMPIRE framework (adapted):
 
 **Match:** The codebase pattern is module-level const EMPTY_ARRAY or const EMPTY_X: Type[] = [] — common in admin.roles.v2 and other features to stabilize default props.
 
-**Plan:** [Step-by-step implementation plan]
+**Plan:**
 1. Add three module-level constants near the top of rule-conditions.tsx (after imports):
 `const EMPTY_STRING_ARRAY: string[] = [];`
 
@@ -116,14 +116,7 @@ No test changes needed — existing tests verify behavior, not referential ident
 
 **Implement:** [Link to your branch/commits as you work]
 
-**Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
-
-Review checklist:
-
- [ ] No any types introduced
- [ ] All props explicitly typed
- [ ] FunctionComponent<...> + ReactElement return signature maintained
- [ ] No new inline [] or {} in JSX or destructuring defaults
+**Review:** 
 
  [ ] TypeScript: no any, explicit type annotations on all new constants (const EMPTY_STRING_ARRAY: string[] = [])
  [ ] Styling: no new styled components involved — not applicable
@@ -136,7 +129,7 @@ Commit message convention (from git log): plain imperative sentence, no ticket p
 
 Fix unstable array references in rule-conditions default props
 
-**Evaluate:** [How will you verify it works?]
+**Evaluate:** 
 
 Existing test infrastructure: `features/admin.rules.v1/__tests__/` exists but currently contains only `__mocks__/data.ts`, no component tests exist yet.
 
