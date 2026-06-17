@@ -119,9 +119,13 @@ No test changes needed — existing tests verify behavior, not referential ident
 **Review:** 
 
  [ ] TypeScript: no any, explicit type annotations on all new constants (const EMPTY_STRING_ARRAY: string[] = [])
+ 
  [ ] Styling: no new styled components involved — not applicable
+ 
  [ ] No scope creep: change is limited to hoisting default values; does not refactor component structure unless step 3 is explicitly taken
+ 
  [ ] Comments: hoisted constants need no comments — names are self-explanatory
+ 
  [ ] Changeset: this repo uses changesets — run pnpm changeset and add a patch entry for @wso2is/admin.rules.v1
  
 Commit message convention (from git log): plain imperative sentence, no ticket prefix, no conventional-commits prefix, e.g.:
