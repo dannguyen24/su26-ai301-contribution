@@ -38,6 +38,12 @@ react-doctor/rerender-memo-with-default-value: default prop value `[]` creates a
 
 ### Environment Setup
 
+Clone the repository: 
+`git clone https://github.com/wso2/identity-apps.git`
+`cd identity-apps`
+Install dependencies:
+`pnpm install`
+
 
 ### Steps to Reproduce
 
@@ -45,13 +51,34 @@ react-doctor/rerender-memo-with-default-value: default prop value `[]` creates a
 2. Run: `grep -rn "\w\+ = \[\]" features --include="*.tsx" | grep -v "const \|let \|var \|//"`
 3. Observe 20+ matches where empty array literals are used as default prop values inside destructured parameters
 
-<img width="936" height="664" alt="Screenshot 2026-06-17 at 1 11 35 AM" src="https://github.com/user-attachments/assets/e7861cf1-30ec-49cd-959f-9b1d9909d989" />
+
 
 ### Reproduction Evidence
 
-- **Commit showing reproduction:** [Link to commit in your fork]
-- **Screenshots/logs:** [If applicable]
-- **My findings:** [What you discovered during reproduction]
+- **Commit showing reproduction:**
+- https://github.com/dannguyen24/identity-apps/tree/fix-issue-27956
+- **Screenshots/logs:**
+ <img width="936" height="664" alt="Screenshot 2026-06-17 at 1 11 35 AM" src="https://github.com/user-attachments/assets/e7861cf1-30ec-49cd-959f-9b1d9909d989" />
+- **My findings:**
+- 255 files across features/ and modules/ contain the pattern — useMemo or useCallback combined with inline default values like ?? [] or ?? {}.
+
+Heaviest concentrations:
+
+admin.roles.v2 — multiple edit/wizard components
+admin.registration-flow-builder.v1 — provider, core, extended-properties components
+admin.ask-password-flow-builder.v1 — same pattern mirrored
+admin.copilot.v1 — hooks and components
+admin.organization-discovery.v1
+The pattern being flagged — returning a new object/array reference as a fallback inside a memo:
+
+
+// Bad — ?? [] creates a new array reference every render when left side is nullish
+const items = useMemo(() => data?.items ?? [], [data]);
+
+// Good — stable reference, no unnecessary rerenders
+const EMPTY_ARRAY: MyType[] = [];
+const items = useMemo(() => data?.items ?? EMPTY_ARRAY, [data]);
+What the rule catches specifically — the issue isn't that useMemo itself rerenders, but that consumers of items (child components, other hooks) will see a new reference on every render even when the data hasn't changed, defeating the purpose of memoization.
 
 ---
 
