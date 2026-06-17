@@ -60,6 +60,7 @@ Install dependencies:
 - **Screenshots/logs:**
  <img width="936" height="664" alt="Screenshot 2026-06-17 at 1 11 35 AM" src="https://github.com/user-attachments/assets/e7861cf1-30ec-49cd-959f-9b1d9909d989" />
 - **My findings:**
+  
 - 255 files across features/ and modules/ contain the pattern — useMemo or useCallback combined with inline default values like ?? [] or ?? {}.
 
 Heaviest concentrations:
