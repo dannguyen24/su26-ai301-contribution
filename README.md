@@ -87,30 +87,73 @@ What the rule catches specifically — the issue isn't that useMemo itself reren
 
 ### Analysis
 
-[Your analysis of the root cause - what's causing the issue?]
+The codebase pattern is module-level const EMPTY_ARRAY or const EMPTY_X: Type[] = [] — common in admin.roles.v2 and other features to stabilize default props.
 
 ### Proposed Solution
-
-[High-level description of your fix approach]
 
 ### Implementation Plan
 
 Using UMPIRE framework (adapted):
 
-**Understand:** [Restate the problem]
+**Understand:** Inline = [] defaults in prop destructuring defeat memoization by creating new references on every render.
 
-**Match:** [What similar patterns/solutions exist in the codebase?]
+**Match:** The codebase pattern is module-level const EMPTY_ARRAY or const EMPTY_X: Type[] = [] — common in admin.roles.v2 and other features to stabilize default props.
 
 **Plan:** [Step-by-step implementation plan]
-1. [Modify file X to do Y]
-2. [Add function Z]
-3. [Update tests]
+1. Add three module-level constants near the top of rule-conditions.tsx (after imports):
+`const EMPTY_STRING_ARRAY: string[] = [];`
+
+2. Replace all four = [] default values in the inner components with = EMPTY_STRING_ARRAY:
+
+Line 213: hiddenResources = [] in ValueInputAutocomplete
+Line 406: hiddenResources = [] in ResourceListSelect
+Lines 669–670: hiddenResources = [], hiddenValues = [] in ConditionValueInput
+Lines 783–785: hiddenConditions = [], hiddenResources = [], hiddenValues = [] in RuleExpression
+
+3. Move `ValueInputAutocomplete`, `ResourceListSelect`, `ConditionValueInput`, and `RuleExpression` outside `RuleConditions` and pass h`andleExpressionChangeDebounced` / context values as explicit props (or consume useRulesContext directly inside each).
+
+No test changes needed — existing tests verify behavior, not referential identity of default props.
 
 **Implement:** [Link to your branch/commits as you work]
 
 **Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
 
+Review checklist:
+
+ [ ] No any types introduced
+ [ ] All props explicitly typed
+ [ ] FunctionComponent<...> + ReactElement return signature maintained
+ [ ] No new inline [] or {} in JSX or destructuring defaults
+
+ [ ] TypeScript: no any, explicit type annotations on all new constants (const EMPTY_STRING_ARRAY: string[] = [])
+ [ ] Styling: no new styled components involved — not applicable
+ [ ] No scope creep: change is limited to hoisting default values; does not refactor component structure unless step 3 is explicitly taken
+ [ ] Comments: hoisted constants need no comments — names are self-explanatory
+ [ ] Changeset: this repo uses changesets — run pnpm changeset and add a patch entry for @wso2is/admin.rules.v1
+ 
+Commit message convention (from git log): plain imperative sentence, no ticket prefix, no conventional-commits prefix, e.g.:
+
+
+Fix unstable array references in rule-conditions default props
+
 **Evaluate:** [How will you verify it works?]
+
+Existing test infrastructure: `features/admin.rules.v1/__tests__/` exists but currently contains only `__mocks__/data.ts`, no component tests exist yet.
+
+Per `docs/testing/UNIT_TESTING.md`, writing unit tests when working on existing features is mandatory. The fix therefore requires a new test file.
+
+What to create: `features/admin.rules.v1/components/__tests__/rule-conditions.test.tsx`
+
+Minimum test cases required:
+
+`<RuleConditions />` renders without exploding (smoke test, uses data-componentid="rules-component-condition")
+Renders condition expressions when rule.rules is populated (uses the existing sampleRuleExecuteInstance mock from __mocks__/data.ts)
+Renders without errors when hiddenConditions, hiddenResources, hiddenValues are not passed — this is the regression test that directly validates the fix (previously these would silently create new [] references; a stable render confirms the constant defaults are used)
+Run with:
+
+
+`npx vitest run features/admin.rules.v1/components/__tests__/rule-conditions.test.tsx`
+
 
 ---
 
