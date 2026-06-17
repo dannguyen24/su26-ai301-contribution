@@ -16,7 +16,7 @@ I'm a computer science student with hands-on experience building React applicati
 
 ### Problem Description
 
-Default prop values like items = [] create a new array reference on every render, breaking React.memo — the component re-renders even when props haven't semantically changed.
+Default prop values like items = [] create a new array reference on every render, breaking React.memo, the component re-renders even when props haven't semantically changed.
 
 ### Expected Behavior
 
@@ -38,13 +38,14 @@ react-doctor/rerender-memo-with-default-value: default prop value `[]` creates a
 
 ### Environment Setup
 
-[Notes on setting up your local development environment - challenges you faced, how you solved them]
 
 ### Steps to Reproduce
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Clone `wso2/identity-apps`
+2. Run: `grep -rn "\w\+ = \[\]" features --include="*.tsx" | grep -v "const \|let \|var \|//"`
+3. Observe 20+ matches where empty array literals are used as default prop values inside destructured parameters
+
+<img width="936" height="664" alt="Screenshot 2026-06-17 at 1 11 35 AM" src="https://github.com/user-attachments/assets/e7861cf1-30ec-49cd-959f-9b1d9909d989" />
 
 ### Reproduction Evidence
 
