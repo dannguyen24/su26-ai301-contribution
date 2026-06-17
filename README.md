@@ -10,25 +10,27 @@
 ## Why I Chose This Issue
 ---
 
-I'm a computer science student with hands-on experience building React applications, and I'm interested in contributing to WSO2 Identity Server as a way to explore the identity and authentication domain. This issue caught my attention because it targets the `react-doctor/rerender-memo-with-default-value` rule — a performance pattern I'm familiar with, where inline default prop values like [] or {} create new object references on every render, defeating the purpose of React.memo. Fixing these 20 occurrences is a focused, well-scoped task that lets me get comfortable with the frontend codebase before moving on to more complex authentication-related features. 
+I'm a computer science student with hands-on experience building React applications, and I'm interested in contributing to WSO2 Identity Server as a way to explore the identity and authentication domain. This issue caught my attention because it targets the `react-doctor/rerender-memo-with-default-value` rule, a performance pattern I'm familiar with, where inline default prop values like [] or {} create new object references on every render, defeating the purpose of React.memo. Fixing these 20 occurrences is a focused, well-scoped task that lets me get comfortable with the frontend codebase before moving on to more complex authentication-related features. 
 
 ## Understanding the Issue
 
 ### Problem Description
 
-[In your own words, what's broken or missing?]
+Default prop values like items = [] create a new array reference on every render, breaking React.memo — the component re-renders even when props haven't semantically changed.
 
 ### Expected Behavior
 
-[What should happen?]
+Components wrapped in React.memo should only re-render when props actually change. An empty array default like items = [] used repeatedly should be the same reference, so if the parent re-renders but passes no new items, the memoized child stays unchanged.
 
 ### Current Behavior
 
-[What actually happens?]
+Every render creates a brand-new [] array reference as the default value. Since React.memo uses shallow (reference) equality, it sees a "new" array each time and re-renders the child component unnecessarily, even though the data is identical. Memoization is silently broken.
+
 
 ### Affected Components
 
-[Which parts of the codebase are involved?]
+No runtime error or crash. The only signal is the ESLint warning from the react-doctor plugin:
+react-doctor/rerender-memo-with-default-value: default prop value `[]` creates a new array reference every render
 
 ---
 
