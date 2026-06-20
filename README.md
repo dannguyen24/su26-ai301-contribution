@@ -114,7 +114,11 @@ Lines 783–785: hiddenConditions = [], hiddenResources = [], hiddenValues = [] 
 
 No test changes needed — existing tests verify behavior, not referential identity of default props.
 
-**Implement:** [Link to your branch/commits as you work]
+**Implement:** 
+**What I built:**
+- Fixed inline = [] default prop references across 7 files in 5 feature packages (admin.rules.v1, admin.approval-workflows.v1, admin.flow-builder-core.v1, admin.policy-administration.v1, admin.webhooks.v1)
+- Replaced 20 inline = [] prop defaults with module-level constants (EMPTY_STRING_ARRAY, EMPTY_NODES, EMPTY_EDGES, etc.) to prevent unnecessary re-renders from unstable array references
+- Fixed 2 lint warnings I introduced (padding-line-between-statements) in rule-conditions.tsx
 
 **Review:** 
 
