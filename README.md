@@ -1,9 +1,13 @@
 # Contribution [#27956]: [React Doctor] rerender-memo-with-default-value: Default prop value [] creates a new array reference every render — extract to... (20 occurrences)
 
 **Contribution Number:** 1
+
 **Student:** Dan Nguyen 
+
 **Issue:** https://github.com/wso2/product-is/issues/27956
+
 **Status:** Phase III
+
 **Working branch:** https://github.com/dannguyen24/identity-apps/tree/fix-issue-27956
 ---
 
