@@ -125,16 +125,6 @@ No test changes needed — existing tests verify behavior, not referential ident
 - Ran git add . from inside apps/console/ instead of the repo root, so the staged area was empty and the commit silently did nothing, learned that git add . only captures files in the current directory and below
 - Pre-existing TypeScript errors and lint warnings in files I touched initially looked like my mistakes — learned to use git diff to confirm what I actually changed vs what was already broken
 - initialNodes and initialEdges in decorated-visual-flow.tsx are typed as Node[] and Edge[] from @xyflow/react, not string[] — couldn't reuse EMPTY_STRING_ARRAY and had to declare separate typed constants
-
-**Commits this week:**
-- 0f068f7 inline array default prop reference in rule-conditions
-- 1b2b292 Fix remaining inline array default props in rule-conditions
-- 8d10c5f Fix inline array default props in approval-workflows rule components
-- 5527baf Fix inline array default props in workflow-resource-autocomplete comp…
-- c012b58 Fix inline array default props in workflow-resource-list-select compo… 
-- 7173c5b Fix inline array default props in decorated-visual-flow omponents
-- d533850 Fix inline array default props in policy-list components
-- 6408828 Fix inline array default props in webhook-channel-config-form components
   
 **Review:** 
 
@@ -176,38 +166,62 @@ Run with:
 
 ## Testing Strategy
 
-### Unit Tests
+**Unit Tests**
 
-- [ ] Test case 1: [Description]
-- [ ] Test case 2: [Description]
-- [ ] Test case 3: [Description]
+N/A, no logic was changed. This is a pure refactor replacing inline = [] prop defaults with module-level constants. No existing tests were broken.
 
-### Integration Tests
+**Integration Tests**
 
-- [ ] Integration scenario 1
-- [ ] Integration scenario 2
+N/A — no API calls, routing, or cross-feature behavior was changed.
 
-### Manual Testing
+**Manual Testing**
 
-[What you tested manually and results]
+Verified that all affected files pass ESLint with no new warnings introduced:
+
+admin.rules.v1/components/rule-conditions.tsx
+admin.approval-workflows.v1/components/rules/workflow-condition-value-input.tsx
+admin.approval-workflows.v1/components/rules/workflow-resource-autocomplete.tsx
+admin.approval-workflows.v1/components/rules/workflow-resource-list-select.tsx
+admin.flow-builder-core.v1/components/visual-flow/decorated-visual-flow.tsx
+admin.policy-administration.v1/components/policy-list.tsx
+admin.webhooks.v1/components/webhook-channel-config-form.tsx
 
 ---
 
 ## Implementation Notes
 
-### Week [X] Progress
+### Week 3 Progress
 
-[What you built this week, challenges faced, decisions made]
+- Fixed 20 inline = [] default prop references across 7 files in 5 feature packages, as identified in product-is#27956. Each inline [] creates a new array reference on every render, defeating React.memo() and useMemo optimizations. Replaced all occurrences with module-level constants typed to the correct array type.
 
 ### Week [Y] Progress
 
-[Continue documenting as you work]
+N/A
 
 ### Code Changes
 
-- **Files modified:** [List]
-- **Key commits:** [Links to important commits]
+- **Files modified:** 
+ - features/admin.rules.v1/components/rule-conditions.tsx
+ - features/admin.approval-workflows.v1/components/rules/workflow-condition-value-input.tsx
+ - features/admin.approval-workflows.v1/components/rules/workflow-resource-autocomplete.tsx
+ - features/admin.approval-workflows.v1/components/rules/workflow-resource-list-select.tsx
+ - features/admin.flow-builder-core.v1/components/visual-flow/decorated-visual-flow.tsx
+ - features/admin.policy-administration.v1/components/policy-list.tsx
+ - features/admin.webhooks.v1/components/webhook-channel-config-form.tsx
+
+- **Key commits:**
+ - 0f068f7 inline array default prop reference in rule-conditions
+ - 1b2b292 Fix remaining inline array default props in rule-conditions
+ - 8d10c5f Fix inline array default props in approval-workflows rule components
+ - 5527baf Fix inline array default props in workflow-resource-autocomplete comp…
+ - c012b58 Fix inline array default props in workflow-resource-list-select compo… 
+ - 7173c5b Fix inline array default props in decorated-visual-flow omponents
+ - d533850 Fix inline array default props in policy-list components
+ - 6408828 Fix inline array default props in webhook-channel-config-form components
+  
 - **Approach decisions:** [Why you chose certain approaches]
+ - Named constants after their type (EMPTY_STRING_ARRAY, EMPTY_NODES, EMPTY_EDGES, EMPTY_POLICIES, EMPTY_CHANNEL_SUBSCRIPTIONS) rather than a generic EMPTY_ARRAY to preserve TypeScript type safety
+ - Placed constants at module scope immediately after the last import in each file, before the first interface declaration
 
 ---
 
