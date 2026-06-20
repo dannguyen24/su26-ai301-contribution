@@ -115,11 +115,27 @@ Lines 783–785: hiddenConditions = [], hiddenResources = [], hiddenValues = [] 
 No test changes needed — existing tests verify behavior, not referential identity of default props.
 
 **Implement:** 
+
 **What I built:**
 - Fixed inline = [] default prop references across 7 files in 5 feature packages (admin.rules.v1, admin.approval-workflows.v1, admin.flow-builder-core.v1, admin.policy-administration.v1, admin.webhooks.v1)
 - Replaced 20 inline = [] prop defaults with module-level constants (EMPTY_STRING_ARRAY, EMPTY_NODES, EMPTY_EDGES, etc.) to prevent unnecessary re-renders from unstable array references
 - Fixed 2 lint warnings I introduced (padding-line-between-statements) in rule-conditions.tsx
 
+**Challenges faced**
+- Ran git add . from inside apps/console/ instead of the repo root, so the staged area was empty and the commit silently did nothing, learned that git add . only captures files in the current directory and below
+- Pre-existing TypeScript errors and lint warnings in files I touched initially looked like my mistakes — learned to use git diff to confirm what I actually changed vs what was already broken
+- initialNodes and initialEdges in decorated-visual-flow.tsx are typed as Node[] and Edge[] from @xyflow/react, not string[] — couldn't reuse EMPTY_STRING_ARRAY and had to declare separate typed constants
+
+**Commits this week:**
+- 0f068f7 inline array default prop reference in rule-conditions
+- 1b2b292 Fix remaining inline array default props in rule-conditions
+- 8d10c5f Fix inline array default props in approval-workflows rule components
+- 5527baf Fix inline array default props in workflow-resource-autocomplete comp…
+- c012b58 Fix inline array default props in workflow-resource-list-select compo… 
+- 7173c5b Fix inline array default props in decorated-visual-flow omponents
+- d533850 Fix inline array default props in policy-list components
+- 6408828 Fix inline array default props in webhook-channel-config-form components
+  
 **Review:** 
 
  [ ] TypeScript: no any, explicit type annotations on all new constants (const EMPTY_STRING_ARRAY: string[] = [])
