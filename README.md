@@ -111,8 +111,11 @@ Using UMPIRE framework (adapted):
 2. Replace all four = [] default values in the inner components with = EMPTY_STRING_ARRAY:
 
 Line 213: hiddenResources = [] in ValueInputAutocomplete
+
 Line 406: hiddenResources = [] in ResourceListSelect
+
 Lines 669–670: hiddenResources = [], hiddenValues = [] in ConditionValueInput
+
 Lines 783–785: hiddenConditions = [], hiddenResources = [], hiddenValues = [] in RuleExpression
 
 3. Move `ValueInputAutocomplete`, `ResourceListSelect`, `ConditionValueInput`, and `RuleExpression` outside `RuleConditions` and pass h`andleExpressionChangeDebounced` / context values as explicit props (or consume useRulesContext directly inside each).
