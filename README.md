@@ -109,14 +109,10 @@ Using UMPIRE framework (adapted):
 `const EMPTY_STRING_ARRAY: string[] = [];`
 
 2. Replace all four = [] default values in the inner components with = EMPTY_STRING_ARRAY:
-
-Line 213: hiddenResources = [] in ValueInputAutocomplete
-
-Line 406: hiddenResources = [] in ResourceListSelect
-
-Lines 669–670: hiddenResources = [], hiddenValues = [] in ConditionValueInput
-
-Lines 783–785: hiddenConditions = [], hiddenResources = [], hiddenValues = [] in RuleExpression
+  - Line 213: hiddenResources = [] in ValueInputAutocomplete
+  - Line 406: hiddenResources = [] in ResourceListSelect
+  - Lines 669–670: hiddenResources = [], hiddenValues = [] in ConditionValueInput
+  - Lines 783–785: hiddenConditions = [], hiddenResources = [], hiddenValues = [] in RuleExpression
 
 3. Move `ValueInputAutocomplete`, `ResourceListSelect`, `ConditionValueInput`, and `RuleExpression` outside `RuleConditions` and pass h`andleExpressionChangeDebounced` / context values as explicit props (or consume useRulesContext directly inside each).
 
@@ -125,14 +121,14 @@ No test changes needed — existing tests verify behavior, not referential ident
 **Implement:** 
 
 **What I built:**
-- Fixed inline = [] default prop references across 7 files in 5 feature packages (admin.rules.v1, admin.approval-workflows.v1, admin.flow-builder-core.v1, admin.policy-administration.v1, admin.webhooks.v1)
-- Replaced 20 inline = [] prop defaults with module-level constants (EMPTY_STRING_ARRAY, EMPTY_NODES, EMPTY_EDGES, etc.) to prevent unnecessary re-renders from unstable array references
-- Fixed 2 lint warnings I introduced (padding-line-between-statements) in rule-conditions.tsx
+- Fixed inline = [] default prop references across 7 files in 5 feature packages (`admin.rules.v1`, `admin.approval-workflows.v1`, `admin.flow-builder-core.v1`, `admin.policy-administration.v1`, `admin.webhooks.v1`)
+- Replaced 20 inline = [] prop defaults with module-level constants (`EMPTY_STRING_ARRAY`, `EMPTY_NODES`, `EMPTY_EDGES`, etc.) to prevent unnecessary re-renders from unstable array references
+- Fixed 2 lint warnings I introduced (padding-line-between-statements) in `rule-conditions.tsx`
 
 **Challenges faced**
-- Ran git add . from inside apps/console/ instead of the repo root, so the staged area was empty and the commit silently did nothing, learned that git add . only captures files in the current directory and below
+- Ran `git add .` from inside `apps/console/` instead of the repo root, so the staged area was empty and the commit silently did nothing, learned that git add . only captures files in the current directory and below
 - Pre-existing TypeScript errors and lint warnings in files I touched initially looked like my mistakes — learned to use git diff to confirm what I actually changed vs what was already broken
-- initialNodes and initialEdges in decorated-visual-flow.tsx are typed as Node[] and Edge[] from @xyflow/react, not string[] — couldn't reuse EMPTY_STRING_ARRAY and had to declare separate typed constants
+- initialNodes and initialEdges in `decorated-visual-flow.tsx` are typed as Node[] and Edge[] from `@xyflow/react`, not string[], couldn't reuse EMPTY_STRING_ARRAY and had to declare separate typed constants
   
 **Review:** 
 
@@ -186,13 +182,13 @@ N/A — no API calls, routing, or cross-feature behavior was changed.
 
 Verified that all affected files pass ESLint with no new warnings introduced:
 
-admin.rules.v1/components/rule-conditions.tsx
-admin.approval-workflows.v1/components/rules/workflow-condition-value-input.tsx
-admin.approval-workflows.v1/components/rules/workflow-resource-autocomplete.tsx
-admin.approval-workflows.v1/components/rules/workflow-resource-list-select.tsx
-admin.flow-builder-core.v1/components/visual-flow/decorated-visual-flow.tsx
-admin.policy-administration.v1/components/policy-list.tsx
-admin.webhooks.v1/components/webhook-channel-config-form.tsx
+ - admin.rules.v1/components/rule-conditions.tsx
+ - admin.approval-workflows.v1/components/rules/workflow-condition-value-input.tsx
+ - admin.approval-workflows.v1/components/rules/workflow-resource-autocomplete.tsx
+ - admin.approval-workflows.v1/components/rules/workflow-resource-list-select.tsx
+ - admin.flow-builder-core.v1/components/visual-flow/decorated-visual-flow.tsx
+ - admin.policy-administration.v1/components/policy-list.tsx
+ - admin.webhooks.v1/components/webhook-channel-config-form.tsx
 
 ---
 
