@@ -3,8 +3,8 @@
 **Contribution Number:** 1
 **Student:** Dan Nguyen 
 **Issue:** https://github.com/wso2/product-is/issues/27956
-**Status:** Phase II
-
+**Status:** Phase III
+**Working branch:** https://github.com/dannguyen24/identity-apps/tree/fix-issue-27956
 ---
 
 ## Why I Chose This Issue
@@ -200,7 +200,8 @@ N/A
 
 ### Code Changes
 
-- **Files modified:** 
+**Files modified:** 
+
  - features/admin.rules.v1/components/rule-conditions.tsx
  - features/admin.approval-workflows.v1/components/rules/workflow-condition-value-input.tsx
  - features/admin.approval-workflows.v1/components/rules/workflow-resource-autocomplete.tsx
@@ -209,7 +210,8 @@ N/A
  - features/admin.policy-administration.v1/components/policy-list.tsx
  - features/admin.webhooks.v1/components/webhook-channel-config-form.tsx
 
-- **Key commits:**
+**Key commits:**
+
  - 0f068f7 inline array default prop reference in rule-conditions
  - 1b2b292 Fix remaining inline array default props in rule-conditions
  - 8d10c5f Fix inline array default props in approval-workflows rule components
@@ -219,7 +221,8 @@ N/A
  - d533850 Fix inline array default props in policy-list components
  - 6408828 Fix inline array default props in webhook-channel-config-form components
   
-- **Approach decisions:** [Why you chose certain approaches]
+**Approach decisions:**
+
  - Named constants after their type (EMPTY_STRING_ARRAY, EMPTY_NODES, EMPTY_EDGES, EMPTY_POLICIES, EMPTY_CHANNEL_SUBSCRIPTIONS) rather than a generic EMPTY_ARRAY to preserve TypeScript type safety
  - Placed constants at module scope immediately after the last import in each file, before the first interface declaration
 
