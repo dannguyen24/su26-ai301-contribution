@@ -6,7 +6,7 @@
 
 **Issue:** https://github.com/wso2/product-is/issues/27956
 
-**Status:** Phase III
+**Status:** Phase IV
 
 **Working branch:** https://github.com/dannguyen24/identity-apps/tree/fix-issue-27956
 
@@ -234,15 +234,14 @@ N/A
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when submitted]
+**PR Link:** [https://github.com/wso2/identity-apps/pull
+](https://github.com/wso2/identity-apps/pull/10440)
 
-**PR Description:** [Draft or final PR description - much of the content above can be adapted]
+**PR Description:** Fixed 20 inline `= []` default prop references across 7 files in 5 feature packages (`admin.rules.v1`, `admin.approval-workflows.v1`, `admin.flow-builder-core.v1`, `admin.policy-administration.v1`, `admin.webhooks.v1`). Each inline `[]` creates a new array reference on every render, defeating `React.memo()` and `useMemo` optimizations.
 
-**Maintainer Feedback:**
-- [Date]: [Summary of feedback received]
-- [Date]: [How you addressed it]
+**Maintainer Feedback:** Awaiting review.
 
-**Status:** [Awaiting review / Iterating / Approved / Merged]
+**Status:** Awaiting review
 
 ---
 
