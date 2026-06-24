@@ -10,6 +10,8 @@
 
 **Working branch:** https://github.com/dannguyen24/identity-apps/tree/fix-issue-27956
 
+**Pull Request:** https://github.com/wso2/identity-apps/pull/10440#pullrequestreview-4539155611
+
 ---
 
 ## Why I Chose This Issue
@@ -239,9 +241,15 @@ N/A
 
 **PR Description:** Fixed 20 inline `= []` default prop references across 7 files in 5 feature packages (`admin.rules.v1`, `admin.approval-workflows.v1`, `admin.flow-builder-core.v1`, `admin.policy-administration.v1`, `admin.webhooks.v1`). Each inline `[]` creates a new array reference on every render, defeating `React.memo()` and `useMemo` optimizations.
 
-**Maintainer Feedback:** Awaiting review.
+**Maintainer Feedback:** 
 
-**Status:** Awaiting review
+- The approach that I took resulted in redundant duplications across different files.
+- I should create a variable in a shared files for reusability.
+
+**Status:** 
+
+- Responded to maintainer's feedback.
+- Awaiting 2nd round of review.
 
 ---
 
@@ -249,20 +257,19 @@ N/A
 
 ### Technical Skills Gained
 
-[What you learned technically]
+- Understand how using a default array like items = [] in the function signature assigns a new memory reference every time the component renders. Because React uses shallow equality (Object.is) to compare props, it sees a new array reference and triggers a re-render, effectively breaking React.memo.
 
 ### Challenges Overcome
 
-[What was hard and how you solved it]
+- Understanding large codebase, learning how to use Claude efficiently to streamline work process. 
 
 ### What I'd Do Differently Next Time
 
-[Reflection on your process]
+- Prompt communication with maintainer.
+- Create a documentation for tracking progresses.
 
 ---
 
 ## Resources Used
 
-- [Link to helpful documentation]
-- [Tutorial or Stack Overflow post that helped]
-- [GitHub issues or discussions that helped]
+N/A
